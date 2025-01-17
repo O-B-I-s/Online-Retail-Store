@@ -1,0 +1,118 @@
+﻿/* Set padding to keep content from hitting the edges */
+/*.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}*/
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Custom styling for product cards */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+.card-img-top {
+    border-bottom: 1px solid #ddd;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.card-text {
+    margin: 0.5rem 0;
+}
+
+.btn {
+    margin: 0 0.2rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+/*custom css*/
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.parallax {
+    /* Full height sections */
+    height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+    .section h1 {
+        font-size: 4rem;
+        color: #fff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+/* Parallax background images */
+#image1 {
+    background-image: url('Images/Shoes1.jpg'); /* Replace with your image path */
+}
+
+#image2 {
+    background-image: url('Images/Shoes2.jpg'); /* Replace with your image path */
+}
+/* Content Section */
+.content {
+    background: #f4f4f4;
+    color: #333;
+}
+
+
+body.homepage .homepage-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+    body.homepage .homepage-wrapper .container.body-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+body.homepage .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+

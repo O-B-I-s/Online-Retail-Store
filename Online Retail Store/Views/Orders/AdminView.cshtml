@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Online_Retail_Store.Models.Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<div class="container">
+    <h2>List of Orders</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <form method="post" action="@Url.Action("UpdateStatus", "Orders", new { id = item.OrderId })">
+                        <select class=" btn-outline-secondary"e name="newStatus" onchange="this.form.submit()">
+                            <option value="Pending" @(item.Status == "Pending" ? "selected" : "")>Pending</option>
+                            <option value="Processing" @(item.Status == "Processing" ? "selected" : "")>Processing</option>
+                            <option value="On Transit" @(item.Status == "On Transit" ? "selected" : "")>On Transit</option>
+                            <option value="Delivered" @(item.Status == "Delivered" ? "selected" : "")>Delivered</option>
+                        </select>
+                    </form>
+                </td>
+                <td>
+
+                    @Html.ActionLink("Details", "OrderDetails", new { id = item.OrderId }, new { @class = "btn btn-info" })
+
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+</div>

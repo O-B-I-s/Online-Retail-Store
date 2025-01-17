@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Online_Retail_Store.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+@Scripts.Render("~/bundles/ok")
+
+<div class="container">
+    <h2>Categories</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table id="category" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Details
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CategoryId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CategoryId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
+                </td>*@
+                <td>
+                    <!-- Use ActionLink to link to the Edit page -->
+                    @Html.ActionLink("Edit", "Edit", "Categories", new { id = item.CategoryId }, new { @class = "btn btn-info" })
+                </td>
+                    <td>
+                        @using (Html.BeginForm("Details", "Categories", new { id = item.CategoryId }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Detils" class="btn btn-info" />
+                        }
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "Categories", new { id = item.CategoryId }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you wish to delete this category?')" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+       
+
+    </table>
+
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#category").DataTable();
+        });
+    </script>
+}

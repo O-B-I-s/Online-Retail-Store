@@ -1,0 +1,198 @@
+﻿@model IEnumerable<Online_Retail_Store.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+@Scripts.Render("~/bundles/ok")
+
+<div class="container">
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table id="products" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Product Name
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stock)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.ImagePath)
+                </th>*@
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Details
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.ImagePath)
+                    </td>*@
+                    @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+                </td>*@
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }, new { @class = "btn btn-info btn-sm" })
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductId }, new { @class = "btn btn-info btn-sm" })
+                    
+                </td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "Products", new { id = item.ProductId }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you wish to delete this movie?');" />
+                        }
+                    </td>
+                    @*<td>
+                    @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+                    {
+                        @Html.Hidden("ProductId", item.ProductId)
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    }
+                </td>*@
+                </tr>
+            }
+        </tbody>
+        
+        <tfoot></tfoot>
+    </table>
+
+    <p>Total Products: @ViewBag.TotalProducts</p>
+    <p>Total Orders: @ViewBag.TotalOrders</p>
+    <p>Total Customers: @ViewBag.TotalCustomers</p>
+
+    <div style=" padding : 50px 350px !important; background-color: aquamarine;">
+        <!-- Category Distribution Chart -->
+        <h3>Product Category Distribution</h3>
+        <canvas id="categoryChart" width="250" height="100"></canvas> <!-- Reduced width and height -->
+    </div>
+
+    <div style=" padding: 100px; background-color:blanchedalmond;">
+        <!-- Sales Trends (Last 7 Days) -->
+        <h3>Sales Trends (Last 7 Days)</h3>
+        <canvas id="salesChart" width="250" height="100"></canvas>
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @*<p>@Html.Raw(ViewBag.CategoryDataJson)</p>
+        <p>@Html.Raw(ViewBag.SalesDataJson)</p>*@
+
+    <div>
+        <script>
+            $(document).ready(function () {
+                $("#products").DataTable();
+            });
+
+            var categoryData = @Html.Raw(ViewBag.CategoryDataJson);
+            var categoryLabels = categoryData.map(item => item.Name);
+            var categoryCounts = categoryData.map(item => item.ProductCount);
+
+
+
+            var ctxCategory = document.getElementById('categoryChart').getContext('2d');
+            var categoryChart = new Chart(ctxCategory, {
+                type: 'pie',
+                data: {
+                    labels: categoryLabels,
+                    datasets: [{
+                        label: 'Products',
+                        data: categoryCounts,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                    }]
+                }
+            });
+
+            // Deserialize Sales Data
+            var salesData = @Html.Raw(ViewBag.SalesDataJson);
+            var salesDates = salesData.map(item => item.Date);
+            var salesTotals = salesData.map(item => item.TotalSales);
+
+            var ctxSales = document.getElementById('salesChart').getContext('2d');
+            var salesChart = new Chart(ctxSales, {
+                type: 'line',
+                data: {
+                    labels: salesDates,
+                    datasets: [{
+                        label: 'Total Sales',
+                        data: salesTotals,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date' // X-axis title
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Sales (in CAD)' // Y-axis title
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+
+
+</div>
+
+@section scripts {
+    <script>
+
+    </script>
+}

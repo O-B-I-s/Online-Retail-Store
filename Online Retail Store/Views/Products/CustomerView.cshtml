@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Online_Retail_Store.Models.Product>
+
+<div class="container">
+
+    <h2>Products</h2>
+
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card">
+                    <img src="@Url.Content(string.IsNullOrEmpty(product.ImagePath) ? "~/Content/Images/images.png" : product.ImagePath)"
+                         class="card-img-top img-fluid"
+                         alt="@product.Name"
+                         style="max-height: 200px; object-fit: cover;" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text text-muted">Price: @product.Price CAD</p>
+                        <p class="card-text">
+                            Category: <span class="badge bg-secondary">@product.Category.Name</span>
+                        </p>
+                        <div class="d-flex justify-content-around">
+                            @*@Html.ActionLink("Edit", "Edit", new { id = product.ProductId }, new { @class = "btn btn-primary btn-sm" })
+
+        @Html.ActionLink("Delete", "Delete", new { id = product.ProductId }, new { @class = "btn btn-danger btn-sm" })*@
+                            @Html.ActionLink("Details", "Details", new { id = product.ProductId }, new { @class = "btn btn-info btn-sm" })
+
+                            @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("ProductId", product.ProductId)
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

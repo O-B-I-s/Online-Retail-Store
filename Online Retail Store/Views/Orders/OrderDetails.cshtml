@@ -1,0 +1,31 @@
+﻿@model Online_Retail_Store.Models.Order
+
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<h2>Order Details</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderDetail in Model.OrderDetails)
+        {
+            <tr>
+                <td>@orderDetail.Product.Name</td>
+                <td>@orderDetail.Quantity</td>
+                <td>@orderDetail.UnitPrice.ToString("C")</td>
+                <td>@orderDetail.TotalPrice.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Status: @Model.Status</h4>
